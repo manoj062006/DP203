@@ -1,0 +1,17 @@
+{
+	"name": "SQL script 4",
+	"properties": {
+		"content": {
+			"query": "SELECT  d.CalendarYear AS Year,\n        d.MonthNumberOfYear AS Month,\n        SUM(i.SalesAmount) AS InternetSalesAmount\nFROM FactInternetSales AS i\nJOIN DimDate AS d ON i.OrderDateKey = d.DateKey\nGROUP BY d.CalendarYear, d.MonthNumberOfYear\nORDER BY Year, Month;",
+			"metadata": {
+				"language": "sql"
+			},
+			"currentConnection": {
+				"databaseName": "sqltakwblm",
+				"poolName": "sqltakwblm"
+			},
+			"resultLimit": 5000
+		},
+		"type": "SqlQuery"
+	}
+}

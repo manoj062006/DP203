@@ -1,0 +1,17 @@
+{
+	"name": "SQL script 2",
+	"properties": {
+		"content": {
+			"query": "select * from dbo.DimPromotion",
+			"metadata": {
+				"language": "sql"
+			},
+			"currentConnection": {
+				"databaseName": "sqltakwblm",
+				"poolName": "sqltakwblm"
+			},
+			"resultLimit": 5000
+		},
+		"type": "SqlQuery"
+	}
+}

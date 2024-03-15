@@ -1,0 +1,17 @@
+{
+	"name": "SQL script 5",
+	"properties": {
+		"content": {
+			"query": "SELECT  d.CalendarYear AS Year,\n        g.EnglishCountryRegionName AS Region,\n        SUM(i.SalesAmount) AS InternetSalesAmount\nFROM FactInternetSales AS i\nJOIN DimDate AS d ON i.OrderDateKey = d.DateKey\nJOIN DimCustomer AS c ON i.CustomerKey = c.CustomerKey\nJOIN DimGeography AS g ON c.GeographyKey = g.GeographyKey\nGROUP BY d.CalendarYear, g.EnglishCountryRegionName\nORDER BY Year, Region;\n",
+			"metadata": {
+				"language": "sql"
+			},
+			"currentConnection": {
+				"databaseName": "sqltakwblm",
+				"poolName": "sqltakwblm"
+			},
+			"resultLimit": 5000
+		},
+		"type": "SqlQuery"
+	}
+}
