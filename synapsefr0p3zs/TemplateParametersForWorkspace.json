@@ -5,6 +5,9 @@
 		"workspaceName": {
 			"value": "synapsefr0p3zs"
 		},
+		"Data_Warehouse_connectionString": {
+			"value": "Integrated Security=False;Encrypt=True;Connection Timeout=30;Data Source=synapsefr0p3zs.sql.azuresynapse.net;Initial Catalog=sqlfr0p3zs"
+		},
 		"synapsefr0p3zs-WorkspaceDefaultSqlServer_connectionString": {
 			"value": "Integrated Security=False;Encrypt=True;Connection Timeout=30;Data Source=tcp:synapsefr0p3zs.sql.azuresynapse.net,1433;Initial Catalog=@{linkedService().DBName}"
 		},
