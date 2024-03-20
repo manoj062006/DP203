@@ -1,0 +1,15 @@
+{
+	"$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"workspaceName": {
+			"value": "synapse53fguzs"
+		},
+		"synapse53fguzs-WorkspaceDefaultSqlServer_connectionString": {
+			"value": "Integrated Security=False;Encrypt=True;Connection Timeout=30;Data Source=tcp:synapse53fguzs.sql.azuresynapse.net,1433;Initial Catalog=@{linkedService().DBName}"
+		},
+		"synapse53fguzs-WorkspaceDefaultStorage_properties_typeProperties_url": {
+			"value": "https://datalake53fguzs.dfs.core.windows.net"
+		}
+	}
+}
