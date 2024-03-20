@@ -1,0 +1,183 @@
+{
+	"name": "Spark Transform",
+	"properties": {
+		"nbformat": 4,
+		"nbformat_minor": 2,
+		"bigDataPool": {
+			"referenceName": "sparkshk9me6",
+			"type": "BigDataPoolReference"
+		},
+		"sessionProperties": {
+			"driverMemory": "28g",
+			"driverCores": 4,
+			"executorMemory": "28g",
+			"executorCores": 4,
+			"numExecutors": 2,
+			"conf": {
+				"spark.dynamicAllocation.enabled": "false",
+				"spark.dynamicAllocation.minExecutors": "2",
+				"spark.dynamicAllocation.maxExecutors": "2",
+				"spark.autotune.trackingId": "52bb0590-7877-4c53-821a-aa7e844cfc67"
+			}
+		},
+		"metadata": {
+			"saveOutput": true,
+			"enableDebugMode": false,
+			"kernelspec": {
+				"name": "synapse_pyspark",
+				"display_name": "Synapse PySpark"
+			},
+			"language_info": {
+				"name": "python"
+			},
+			"a365ComputeOptions": {
+				"id": "/subscriptions/c9e64096-df66-4371-ad6d-43fcab83a934/resourceGroups/dp203-shk9me6/providers/Microsoft.Synapse/workspaces/synapseshk9me6/bigDataPools/sparkshk9me6",
+				"name": "sparkshk9me6",
+				"type": "Spark",
+				"endpoint": "https://synapseshk9me6.dev.azuresynapse.net/livyApi/versions/2019-11-01-preview/sparkPools/sparkshk9me6",
+				"auth": {
+					"type": "AAD",
+					"authResource": "https://dev.azuresynapse.net"
+				},
+				"sparkVersion": "3.2",
+				"nodeCount": 3,
+				"cores": 4,
+				"memory": 28,
+				"automaticScaleJobs": false
+			},
+			"sessionKeepAliveTimeout": 30
+		},
+		"cells": [
+			{
+				"cell_type": "markdown",
+				"source": [
+					"# Transform data by using Spark\n",
+					"\n",
+					"This notebook transforms sales order data; converting it from CSV to Parquet format and splitting customer name into two separate fields.\n",
+					"\n",
+					"## Set variables"
+				]
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"jupyter": {
+						"source_hidden": false,
+						"outputs_hidden": false
+					},
+					"nteract": {
+						"transient": {
+							"deleting": false
+						}
+					}
+				},
+				"source": [
+					"import uuid\r\n",
+					"\r\n",
+					"# Variable for unique folder name\r\n",
+					"folderName = uuid.uuid4()"
+				],
+				"execution_count": null
+			},
+			{
+				"cell_type": "markdown",
+				"metadata": {
+					"nteract": {
+						"transient": {
+							"deleting": false
+						}
+					}
+				},
+				"source": [
+					"## Load source data\r\n",
+					"\r\n",
+					"Let's start by loading some historical sales order data into a dataframe."
+				]
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"collapsed": false
+				},
+				"source": [
+					"order_details = spark.read.csv('/data/*.csv', header=True, inferSchema=True)"
+				],
+				"execution_count": null
+			},
+			{
+				"cell_type": "markdown",
+				"metadata": {
+					"nteract": {
+						"transient": {
+							"deleting": false
+						}
+					}
+				},
+				"source": [
+					"## Transform the data structure\r\n",
+					"\r\n",
+					"The source data includes a **CustomerName** field, that contains the customer's first and last name. Modify the dataframe to separate this field into separate **FirstName** and **LastName** fields."
+				]
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"jupyter": {
+						"source_hidden": false,
+						"outputs_hidden": false
+					},
+					"nteract": {
+						"transient": {
+							"deleting": false
+						}
+					},
+					"collapsed": false
+				},
+				"source": [
+					"from pyspark.sql.functions import split, col\r\n",
+					"\r\n",
+					"# Create the new FirstName and LastName fields\r\n",
+					"transformed_df = order_details.withColumn(\"FirstName\", split(col(\"CustomerName\"), \" \").getItem(0)).withColumn(\"LastName\", split(col(\"CustomerName\"), \" \").getItem(1))\r\n",
+					"\r\n",
+					"# Remove the CustomerName field\r\n",
+					"transformed_df = transformed_df.drop(\"CustomerName\")"
+				],
+				"execution_count": null
+			},
+			{
+				"cell_type": "markdown",
+				"metadata": {
+					"nteract": {
+						"transient": {
+							"deleting": false
+						}
+					}
+				},
+				"source": [
+					"## Save the transformed data\r\n",
+					"\r\n",
+					"Now save the transformed dataframe in Parquet format in a folder specified in a variable (Overwriting the data if it already exists)."
+				]
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"jupyter": {
+						"source_hidden": false,
+						"outputs_hidden": false
+					},
+					"nteract": {
+						"transient": {
+							"deleting": false
+						}
+					}
+				},
+				"source": [
+					"transformed_df.write.mode(\"overwrite\").parquet('/%s' % folderName)\r\n",
+					"print (\"Transformed data saved in %s!\" % folderName)"
+				],
+				"execution_count": null
+			}
+		]
+	}
+}
