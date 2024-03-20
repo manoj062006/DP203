@@ -1,0 +1,26 @@
+{
+	"name": "relationship-yicxjpvynd",
+	"properties": {
+		"Name": "relationship-yicxjpvynd",
+		"EntityType": "RELATIONSHIP",
+		"Namespace": {
+			"DatabaseName": "RetailDB"
+		},
+		"Origin": {
+			"Type": "SPARK"
+		},
+		"FromTableName": "RetailProduct",
+		"ToTableName": "Salesorder",
+		"ColumnRelationshipInformations": [
+			{
+				"FromColumnName": "ProductId",
+				"ToColumnName": "ProductId"
+			}
+		],
+		"RelationshipType": 0,
+		"PublishStatus": "PUBLISHED",
+		"ObjectVersion": 1,
+		"ObjectId": "682c8f16-ce1a-4cc7-a384-ac1a3a8e7701"
+	},
+	"type": "RELATIONSHIP"
+}
