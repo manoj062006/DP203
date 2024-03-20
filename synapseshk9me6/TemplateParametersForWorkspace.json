@@ -1,0 +1,15 @@
+{
+	"$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"workspaceName": {
+			"value": "synapseshk9me6"
+		},
+		"synapseshk9me6-WorkspaceDefaultSqlServer_connectionString": {
+			"value": "Integrated Security=False;Encrypt=True;Connection Timeout=30;Data Source=tcp:synapseshk9me6.sql.azuresynapse.net,1433;Initial Catalog=@{linkedService().DBName}"
+		},
+		"synapseshk9me6-WorkspaceDefaultStorage_properties_typeProperties_url": {
+			"value": "https://datalakeshk9me6.dfs.core.windows.net"
+		}
+	}
+}
